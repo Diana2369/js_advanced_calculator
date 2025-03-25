@@ -13,7 +13,14 @@ function makeCalculator() {
     divide: (a, b) => a / b,
 
     operate(callback, number) {
-      this.result = callback(this.result, number);
+      if (
+        typeof callback === 'function' &&
+        [this.add, this.subtract, this.multiply, this.divide].includes(callback)
+      ) {
+        this.result = callback(this.result, number);
+      } else {
+        throw new Error('Invalid operation');
+      }
 
       return this;
     },
